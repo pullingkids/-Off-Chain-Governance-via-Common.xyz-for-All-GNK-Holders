@@ -2,12 +2,12 @@
 
 ## Motivation
 
-Gonka governance currently works through the standard Cosmos SDK `x/gov` module. To vote on a proposal, a participant must have a **Cold Account Key** — the governance key created when joining the network as a host. In practice, this means only active hosts (node operators) participate in governance decisions.
+Gonka governance currently works through the standard Cosmos SDK `x/gov` module. Voting power is derived from **compute weight** — a score each host earns through Proof of Compute activity (nonces delivered, inference work completed). In practice, this means only active hosts (node operators) participate in governance, and their influence is proportional to their hardware contribution.
 
 This creates a fundamental mismatch between decision type and decision-maker:
 
-- **Hosts are infrastructure operators.** They have direct expertise in node performance, hardware requirements, and protocol stability. Giving them authority over technical decisions makes sense.
-- **Hosts are not the only stakeholders.** Treasury allocations, marketing budgets, ecosystem grants, and partnership decisions affect all GNK holders — miners who earned GNK through inference work, developers who use the network, and anyone who holds GNK. Excluding these participants from non-technical decisions limits the network's ability to govern itself as a community.
+- **Hosts are infrastructure operators.** Their compute weight reflects real contribution to the network — inference capacity, uptime, reliability. Giving them authority over technical decisions makes sense.
+- **Hosts are not the only stakeholders.** Treasury allocations, marketing budgets, ecosystem grants, and partnership decisions affect all GNK holders — miners who earned GNK through inference work, developers who use the network, and anyone who holds GNK. None of these participants have a formal voice in community decisions today.
 
 As Gonka grows — more hosts, more developers, more GNK holders — this mismatch will only become more acute. Community decisions should be made by the community.
 
@@ -19,10 +19,10 @@ As Gonka grows — more hosts, more developers, more GNK holders — this mismat
 
 | Track | Decision Type | Who Votes | Mechanism |
 |-------|--------------|-----------|-----------|
-| Technical | Chain upgrades, parameter changes, security | Hosts (node operators) | Existing `x/gov` (current system) |
+| Technical | Chain upgrades, parameter changes, security | Hosts (weighted by compute) | Existing `x/gov` (current system) |
 | Community | Treasury, marketing, grants, partnerships | All GNK holders | New Token-Based DAO |
 
-Hosts retain full authority over technical decisions — software upgrades, consensus parameters, node configurations. These require direct protocol knowledge and operational accountability.
+Hosts retain full authority over technical decisions — software upgrades, consensus parameters, node configurations. Their compute weight reflects real contribution to the network and is the right signal for protocol-level decisions.
 
 All other decisions — how community funds are spent, which partnerships are approved, which marketing initiatives are funded — move to a **Token-Based DAO** where any GNK holder votes proportionally to their balance, with results enforced automatically by smart contract.
 
@@ -41,7 +41,7 @@ Gonka's development team already has experience deploying and maintaining CosmWa
 ### Current Architecture
 
 ```
-All proposals → x/gov → Host vote → Execution
+All proposals → x/gov → Host vote (weighted by compute) → Execution
 ```
 
 ### Proposed Architecture
